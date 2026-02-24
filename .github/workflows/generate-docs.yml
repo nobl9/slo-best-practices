@@ -7,13 +7,9 @@ on:
 jobs:
   generate-docs:
     runs-on: ubuntu-latest
+    container: pandoc/extra
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Pandoc and LaTeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-extra
 
       - name: Preprocess markdown
         run: bash .github/scripts/preprocess-docs.sh
