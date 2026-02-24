@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -66,7 +66,7 @@ jobs:
       - name: Generate PDF
         run: |
           pandoc combined.md \
-            -o generated/Nobl9_SLO_Best_Practices_Guide.pdf \
+            -o Nobl9_SLO_Best_Practices_Guide.pdf \
             --toc --toc-depth=3 --number-sections \
             --pdf-engine=xelatex \
             -V mainfont="DejaVu Sans" \
@@ -84,15 +84,17 @@ jobs:
       - name: Generate DOCX
         run: |
           pandoc combined.md \
-            -o generated/Nobl9_SLO_Best_Practices_Guide.docx \
+            -o Nobl9_SLO_Best_Practices_Guide.docx \
             --toc --toc-depth=3 --number-sections \
             --highlight-style=tango \
             --metadata title="Nobl9 SLO Best Practices Guide" \
             --metadata subtitle="Enterprise Rollout Strategies & Operational Playbook" \
             --metadata date="$(date +%Y-%m-%d)"
 
-      - name: Commit generated documents
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Upload generated documents
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: "docs: update generated PDF and DOCX"
-          file_pattern: "generated/*"
+          name: slo-best-practices-guide
+          path: |
+            Nobl9_SLO_Best_Practices_Guide.pdf
+            Nobl9_SLO_Best_Practices_Guide.docx
