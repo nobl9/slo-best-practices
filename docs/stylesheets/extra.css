@@ -1,0 +1,66 @@
+/* Nobl9 Brand Colors */
+:root {
+  --md-primary-fg-color: #0B1E2E;
+  --md-primary-fg-color--light: #122a3d;
+  --md-primary-fg-color--dark: #071520;
+  --md-accent-fg-color: #00BCD4;
+  --md-typeset-a-color: #00838F;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0B1E2E;
+  --md-accent-fg-color: #4DD0E1;
+}
+
+/* Hero banner on home page */
+.hero-banner {
+  background: linear-gradient(135deg, #0B1E2E 0%, #1a3a52 40%, #00838F 100%);
+  border-radius: 12px;
+  padding: 48px 40px;
+  margin: 16px 0 32px;
+  color: white;
+}
+
+.hero-banner p {
+  color: rgba(200, 230, 235, 0.9) !important;
+}
+
+.hero-banner p strong {
+  color: white !important;
+  font-size: 1.2em;
+}
+
+.hero-banner p em {
+  color: rgba(160, 200, 210, 0.7) !important;
+}
+
+/* Doc reference callouts */
+blockquote {
+  border-left-color: #00BCD4 !important;
+}
+
+/* Better table styling */
+.md-typeset table:not([class]) th {
+  background-color: #0B1E2E;
+  color: white;
+}
+
+/* Task list checkboxes */
+.md-typeset .task-list-indicator:before {
+  border-color: #00BCD4;
+}
+
+.md-typeset [type="checkbox"]:checked + .task-list-indicator:before {
+  background-color: #00BCD4;
+}
+
+/* Code block accent */
+.md-typeset pre > code {
+  border-top: 3px solid #00BCD4;
+}
+
+/* Heading accent */
+.md-typeset h1 {
+  border-bottom: 2px solid #00BCD4;
+  padding-bottom: 8px;
+}
