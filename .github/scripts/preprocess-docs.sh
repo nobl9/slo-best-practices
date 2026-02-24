@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 # Concatenates all markdown files in nav order, strips MkDocs-specific
 # syntax that Pandoc can't handle, and outputs a single combined.md.
@@ -7,23 +7,24 @@ set -euo pipefail
 DOCS_DIR="docs"
 OUTPUT="combined.md"
 
-FILES=(
-  "$DOCS_DIR/index.md"
-  "$DOCS_DIR/platform-configuration.md"
-  "$DOCS_DIR/slo-tiering.md"
-  "$DOCS_DIR/slo-lifecycle.md"
-  "$DOCS_DIR/ownership-governance.md"
-  "$DOCS_DIR/cicd-integration.md"
-  "$DOCS_DIR/integration-existing-systems.md"
-  "$DOCS_DIR/operational-playbooks.md"
-  "$DOCS_DIR/common-pitfalls.md"
-  "$DOCS_DIR/appendices.md"
-)
+FILES="
+index.md
+platform-configuration.md
+slo-tiering.md
+slo-lifecycle.md
+ownership-governance.md
+cicd-integration.md
+integration-existing-systems.md
+operational-playbooks.md
+common-pitfalls.md
+appendices.md
+"
 
 : > "$OUTPUT"
 
-for i in "${!FILES[@]}"; do
-  file="${FILES[$i]}"
+first=true
+for name in $FILES; do
+  file="$DOCS_DIR/$name"
 
   if [ ! -f "$file" ]; then
     echo "WARNING: $file not found, skipping" >&2
@@ -31,14 +32,16 @@ for i in "${!FILES[@]}"; do
   fi
 
   # Insert page break between sections (not before the first file)
-  if [ "$i" -gt 0 ]; then
+  if [ "$first" = true ]; then
+    first=false
+  else
     printf '\n\\newpage\n\n' >> "$OUTPUT"
   fi
 
   content=$(cat "$file")
 
   # index.md needs special handling: strip YAML front matter and hero-banner div
-  if [ "$file" = "$DOCS_DIR/index.md" ]; then
+  if [ "$name" = "index.md" ]; then
     # Strip YAML front matter (opening --- to closing ---)
     content=$(echo "$content" | awk 'BEGIN{skip=0} NR==1 && /^---$/{skip=1; next} skip && /^---$/{skip=0; next} !skip')
     # Strip the hero-banner opening and closing div tags
