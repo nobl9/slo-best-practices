@@ -20,8 +20,8 @@ jobs:
             -o Nobl9_SLO_Best_Practices_Guide.pdf \
             --toc --toc-depth=3 --number-sections \
             --pdf-engine=xelatex \
-            -V mainfont="DejaVu Sans" \
-            -V monofont="DejaVu Sans Mono" \
+            -V mainfont="Source Sans Pro" \
+            -V monofont="Source Code Pro" \
             -V fontsize=11pt \
             -V geometry:margin=1in \
             -V colorlinks=true \
