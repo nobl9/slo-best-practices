@@ -51,6 +51,9 @@ for name in $FILES; do
   # Strip :material-*: emoji shortcodes (used by mkdocs-material)
   content=$(echo "$content" | sed 's/ *:material-[a-z-]*: *//g')
 
+  # Rewrite image paths from docs-relative to repo-root-relative
+  content=$(echo "$content" | sed 's|(images/|(docs/images/|g')
+
   echo "$content" >> "$OUTPUT"
 done
 

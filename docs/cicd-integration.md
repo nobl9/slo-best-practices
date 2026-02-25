@@ -1,5 +1,7 @@
 # 6. CI/CD Integration and SLOs-as-Code
 
+![CI/CD Integration](images/cicd-illustration.png)
+
 Managing SLOs as code is the cornerstone of a scalable SLO practice. It brings the same rigor of version control, code review, and automated deployment that engineering teams apply to application code.
 
 

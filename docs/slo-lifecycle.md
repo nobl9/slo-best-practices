@@ -1,5 +1,7 @@
 # 4. SLO Lifecycle Management (SLODLC)
 
+![SLO Lifecycle](images/slo-lifecycle-illustration.png)
+
 The Service Level Objective Development Lifecycle (SLODLC) is an open-source framework that provides a structured, repeatable process for creating and managing SLOs. It consists of five phases: Initiate, Discover, Design, Implement, and Operate. This section maps each SLODLC phase to specific Nobl9 capabilities and organizational practices.
 
 > :material-book-open-variant: **Docs:** [SLODLC Handbook](https://www.slodlc.com/slodlc_handbook/handbook/)
