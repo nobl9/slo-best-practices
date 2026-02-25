@@ -17,6 +17,8 @@ Platform Configuration · SLO Lifecycle · Tiering & Ownership · CI/CD Integrat
 
 ---
 
+![Nobl9 SLO Best Practices Guide](images/cover-banner.png)
+
 # 1. Introduction
 
 This guide provides a comprehensive, step-by-step playbook for deploying Nobl9 Service Level Objectives (SLOs) across a large organization. It is designed for platform engineering teams, SRE leaders, and reliability champions who are responsible for establishing an SLO practice that scales from a pilot team to hundreds of services.
