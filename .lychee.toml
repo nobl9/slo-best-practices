@@ -1,0 +1,8 @@
+exclude = [
+  "^https?://localhost",
+  "^https?://127\\.0\\.0\\.1",
+]
+
+timeout = 30
+max_concurrency = 10
+accept = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]

@@ -16,7 +16,7 @@
 | Budgeting Method | [Occurrences / Time Slices] |
 | Target | [e.g., 99.9%] |
 | Time Window | [e.g., 30-day rolling / Monthly calendar-aligned] |
-| Layer | [Application / Platform / Infrastructure / Dependency] |
+| Layer | [User Journey / Application / Service / Platform / Infrastructure / Dependency] |
 | Tier | [Critical / High / Medium / Low] |
 | Owner | [e.g., checkout-backend@company.com] |
 | Error Budget Policy | [Link to policy document] |
@@ -42,7 +42,7 @@
 
 - [ ] User journeys mapped (AI-assisted or manual)
 - [ ] SLI candidates identified for each journey
-- [ ] Services classified into tiering model (application, platform, infrastructure, dependency)
+- [ ] Services classified into tiering model (user-journey, application/service, platform, infrastructure, dependency)
 - [ ] Data source readiness assessed
 - [ ] Instrumentation gaps documented
 **Phase 2: Design**

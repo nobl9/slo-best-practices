@@ -110,7 +110,7 @@ Establish a standard set of label keys that all teams use consistently. The foll
 | --- | --- | --- |
 | team | Identifies the owning team | checkout, search, platform, mobile |
 | tier | Criticality classification for prioritization | critical, high, medium, low |
-| layer | Architectural layer for tiering strategy (see Section 3) | application, platform, infrastructure, dependency |
+| layer | Architectural layer for tiering strategy (see Section 3) | user-journey, application, platform, infrastructure, dependency |
 | env | Deployment environment | production, staging, development |
 | region | Geographic region or data center | us-east, eu-west, ap-south |
 | customer-type | Customer segment (for segment-specific SLOs) | enterprise, trial, free |
@@ -142,7 +142,7 @@ Inconsistent labeling is one of the most common pitfalls in SLO programs at scal
 # Lint Nobl9 YAML files for required labels
 REQUIRED_LABELS=("team" "tier" "layer" "env")
 ALLOWED_TIERS=("critical" "high" "medium" "low")
-ALLOWED_LAYERS=("application" "platform" "infrastructure" "dependency")
+ALLOWED_LAYERS=("user-journey" "application" "platform" "infrastructure" "dependency")
 
 ERRORS=0
 for file in "$@"; do
@@ -171,7 +171,7 @@ package main
 
 required_labels := ["team", "tier", "layer", "env"]
 allowed_tiers := ["critical", "high", "medium", "low"]
-allowed_layers := ["application", "platform", "infrastructure", "dependency"]
+allowed_layers := ["user-journey", "application", "platform", "infrastructure", "dependency"]
 
 deny[msg] {
   label := required_labels[_]

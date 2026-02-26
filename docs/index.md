@@ -19,7 +19,7 @@ This guide provides a comprehensive, step-by-step playbook for deploying Nobl9 S
 The guide draws on the SLODLC (Service Level Objective Development Lifecycle) framework, Google SRE best practices, and real-world enterprise deployment patterns to provide actionable recommendations across seven key areas:
 
 - Platform Configuration: structuring projects, services, labels, annotations, and data sources in Nobl9
-- SLO Tiering Strategy: separating SLOs across application, platform, and infrastructure layers
+- SLO Tiering Strategy: separating SLOs across user journey, application/service, platform, infrastructure, and dependency layers
 - SLO Lifecycle Management: creating, reviewing, and iterating on SLOs using the SLODLC methodology, including AI-assisted discovery
 - Ownership and Governance: defining roles, responsibilities, review cycles, and escalation paths using RBAC and Nobl9 SLO Oversight
 - CI/CD and SLOs-as-Code: managing SLO definitions through sloctl, Terraform, and automated pipelines with label linting

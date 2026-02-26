@@ -12,4 +12,4 @@
 | Ignoring error budget policies | Policies exist on paper but lack enforcement. | Secure executive sponsorship. Make budget status visible in standups and dashboards. |
 | No-data blind spots | Teams do not configure no-data anomaly alerts. | Configure no-data alerts on every SLO using tier-based thresholds (Section 2.5.2). |
 | Treating SLOs as set-and-forget | Teams create SLOs once and never review. | Use Nobl9 SLO Oversight review cycles. Overdue status creates accountability. |
-| Flat SLO structure without tiering | All SLOs treated equally regardless of layer. | Implement the four-layer tiering model (Section 3). Use composite SLOs for cross-layer views. |
+| Flat SLO structure without tiering | All SLOs treated equally regardless of layer. | Implement the five-layer tiering model (Section 3). Use composite SLOs for cross-layer views. |

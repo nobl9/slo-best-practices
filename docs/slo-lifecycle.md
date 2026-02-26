@@ -102,7 +102,8 @@ documented in docs/slas/payments.md.
 Analyze the service dependency graph from our Kubernetes service mesh
 configuration and Terraform infrastructure definitions. For each
 service, classify it into our tiering model:
-- Application layer: user-facing services
+- User Journey layer: end-to-end workflows spanning multiple services
+- Application / Service layer: user-facing services
 - Platform layer: shared internal services
 - Infrastructure layer: databases, caches, queues
 - Dependency layer: external third-party services
@@ -162,7 +163,7 @@ The Design phase translates discovered SLI candidates into concrete SLO specific
 
 - Never set a 100% target. Every system fails eventually, and a 100% target creates zero error budget.
 - Start with your current baseline. Measure actual reliability over the past 30 to 90 days and set your initial SLO slightly below that level.
-- Align targets with your tiering model: infrastructure targets should be more stringent than application targets.
+- Align targets with your tiering model: infrastructure targets should be more stringent than application / service targets.
 - Align with business requirements and any existing SLAs. Your SLO should be more stringent than your external SLA.
 - Use the SLODLC Review phase to adjust targets iteratively. Your first SLO target will almost certainly need refinement.
 
