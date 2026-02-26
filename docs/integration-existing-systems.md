@@ -77,7 +77,7 @@ The Nobl9 Service Health Dashboard provides a centralized view of all services a
 
 ## 7.5 Composite SLOs for Executive Reporting
 
-Composite SLOs aggregate individual SLOs into a single view representing end-to-end user journeys. They are the primary mechanism for executive-level reliability reporting. A checkout user journey composite might combine SLOs from the cart service (application layer), the API gateway (platform layer), and the database (infrastructure layer), weighted by their relative impact on the user experience. Refer to Section 3.3 for design guidelines.
+Composite SLOs aggregate individual SLOs into a single view representing end-to-end user journeys. They are the primary mechanism for implementing User Journey SLOs (Section 3.2.1) and for executive-level reliability reporting. A checkout user journey composite might combine SLOs from the cart service (application / service layer), the API gateway (platform layer), and the database (infrastructure layer), weighted by their relative impact on the user experience. Refer to Section 3.3 for design guidelines.
 
 > :material-book-open-variant: **Docs:** [Composite SLO Essentials](https://docs.nobl9.com/composites/essentials/)
 
