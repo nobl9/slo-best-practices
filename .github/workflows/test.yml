@@ -1,0 +1,43 @@
+name: PR Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install mkdocs-material
+
+      - name: Build site (strict mode)
+        run: mkdocs build --strict
+
+  preprocess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run preprocess script
+        run: sh .github/scripts/preprocess-docs.sh
+
+      - name: Verify combined.md exists and is non-empty
+        run: test -s combined.md
+
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check external links
+        uses: lychee/lychee-action@v2
+        with:
+          args: "docs/**/*.md"
+          fail: true
