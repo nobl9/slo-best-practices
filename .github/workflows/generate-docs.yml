@@ -17,6 +17,7 @@ jobs:
       - name: Generate PDF
         run: |
           pandoc combined.md \
+            -f markdown-implicit_figures \
             -o Nobl9_SLO_Best_Practices_Guide.pdf \
             --toc --toc-depth=3 --number-sections \
             --pdf-engine=xelatex \
@@ -25,20 +26,15 @@ jobs:
             -V colorlinks=true \
             -V linkcolor=teal \
             -V urlcolor=teal \
-            --highlight-style=tango \
-            --metadata title="Nobl9 SLO Best Practices Guide" \
-            --metadata subtitle="Enterprise Rollout Strategies & Operational Playbook" \
-            --metadata date="$(date +%Y-%m-%d)"
+            --highlight-style=tango
 
       - name: Generate DOCX
         run: |
           pandoc combined.md \
+            -f markdown-implicit_figures \
             -o Nobl9_SLO_Best_Practices_Guide.docx \
             --toc --toc-depth=3 --number-sections \
-            --highlight-style=tango \
-            --metadata title="Nobl9 SLO Best Practices Guide" \
-            --metadata subtitle="Enterprise Rollout Strategies & Operational Playbook" \
-            --metadata date="$(date +%Y-%m-%d)"
+            --highlight-style=tango
 
       - name: Upload generated documents
         uses: actions/upload-artifact@v4
