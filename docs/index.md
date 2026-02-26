@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Nobl9 SLO Deployment Best Practices Guide
 
 <div class="hero-banner" markdown>
