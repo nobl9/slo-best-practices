@@ -20,7 +20,8 @@ common-pitfalls.md
 appendices.md
 "
 
-: > "$OUTPUT"
+# Start with the cover banner image as the title page
+printf '![](docs/images/cover-banner.png)\n' > "$OUTPUT"
 
 first=true
 for name in $FILES; do
@@ -31,21 +32,26 @@ for name in $FILES; do
     continue
   fi
 
-  # Insert page break between sections (not before the first file)
-  if [ "$first" = true ]; then
-    first=false
-  else
-    printf '\n\\newpage\n\n' >> "$OUTPUT"
-  fi
+  # Insert page break between sections
+  printf '\n\\newpage\n\n' >> "$OUTPUT"
 
   content=$(cat "$file")
 
-  # index.md needs special handling: strip YAML front matter and hero-banner div
+  # index.md: strip front matter, title heading, hero div, and the
+  # horizontal rule after the hero. The cover banner image replaces all of it.
   if [ "$name" = "index.md" ]; then
-    # Strip YAML front matter (opening --- to closing ---)
-    content=$(echo "$content" | awk 'BEGIN{skip=0} NR==1 && /^---$/{skip=1; next} skip && /^---$/{skip=0; next} !skip')
-    # Strip the hero-banner opening and closing div tags
-    content=$(echo "$content" | grep -v '<div class="hero-banner"' | grep -v '</div>')
+    content=$(echo "$content" | awk '
+      NR==1 && /^---$/ { fm=1; next }
+      fm && /^---$/    { fm=0; next }
+      fm               { next }
+      /^# Nobl9 SLO Deployment Best Practices Guide$/ { next }
+      /<div class="hero-banner"/ { hero=1; next }
+      hero && /<\/div>/          { hero=0; next }
+      hero                       { next }
+      !started && /^$/           { next }
+      !started && /^---$/        { next }
+      { started=1; print }
+    ')
   fi
 
   # Strip :material-*: emoji shortcodes (used by mkdocs-material)

@@ -1,6 +1,6 @@
 # 5. Ownership, Governance, and Review Cycles
 
-![Ownership and Governance](images/ownership-governance-illustration.png)
+![](images/ownership-governance-illustration.png)
 
 Clear ownership and structured governance are the single most important factors in a successful SLO program. Without them, SLOs become stale metrics that nobody acts on. This section defines roles, responsibilities, governance structures, and the Nobl9 SLO Oversight features that enforce them.
 
