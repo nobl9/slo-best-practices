@@ -29,6 +29,8 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+  logo: images/nobl9-logo.png
+  favicon: images/nobl9-logo.png
   icon:
     repo: fontawesome/brands/github
 

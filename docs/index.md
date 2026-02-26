@@ -2,6 +2,8 @@
 
 <div class="hero-banner" markdown>
 
+<img src="images/nobl9-logo.png" alt="Nobl9" class="hero-logo">
+
 **Enterprise Rollout Strategies & Operational Playbook**
 
 Platform Configuration · SLO Lifecycle · Tiering & Ownership · CI/CD Integration · Governance & Review Cycles · Operational Playbooks

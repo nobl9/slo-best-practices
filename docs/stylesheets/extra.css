@@ -21,6 +21,12 @@
   color: white;
 }
 
+.hero-banner .hero-logo {
+  height: 40px;
+  filter: brightness(0) invert(1);
+  margin-bottom: 12px;
+}
+
 .hero-banner p {
   color: rgba(200, 230, 235, 0.9) !important;
 }
@@ -63,4 +69,9 @@ blockquote {
 .md-typeset h1 {
   border-bottom: 2px solid #00BCD4;
   padding-bottom: 8px;
+}
+
+/* Invert dark logo to white in the header */
+.md-header .md-header__button.md-logo img {
+  filter: brightness(0) invert(1);
 }
