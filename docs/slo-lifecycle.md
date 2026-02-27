@@ -225,6 +225,8 @@ Multi-window, multi-burn-rate alerting is the gold standard from Google's SRE Wo
 
 **Example: Fast-Burn Alert Policy YAML (Using Nobl9 Presets)**
 
+The following examples use PagerDuty and Slack as illustrative alert methods. Substitute the alert methods that match your organization's tooling.
+
 
 ```yaml
 apiVersion: n9/v1alpha

@@ -80,7 +80,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Post the current error budget percentage and burn rate
 - [ ] If caused by a single incident, link to the incident channel or postmortem
 - [ ] Brief the engineering manager
-- [ ] If ServiceNow is configured, verify an incident has been created
+- [ ] If ITSM integration is configured (e.g., ServiceNow), verify an incident has been created
 **Step 3: Triage (within 2 hours)**
 
 - [ ] Review the last 7 days of error budget consumption on the SLO timeline
@@ -109,7 +109,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Update alert thresholds if early warning was insufficient
 - [ ] Document lessons learned in the team's knowledge base
 - [ ] Update the runbook with any new troubleshooting steps
-- [ ] Close the ServiceNow incident with resolution details
+- [ ] Close the ITSM incident with resolution details
 
 ## 8.3 Quarterly SLO Program Review Checklist
 

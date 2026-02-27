@@ -19,6 +19,8 @@ Nobl9 is designed to complement your existing operational tooling, not replace i
 
 ### 7.1.1 ServiceNow Integration Details
 
+The following example demonstrates ITSM integration using ServiceNow. Similar patterns apply to other ITSM tools using the Webhook alert method.
+
 The Nobl9-ServiceNow integration creates incidents in your ServiceNow instance when SLO-based alerts fire. This is particularly valuable for organizations that use ServiceNow as their system of record for incident management and change management. Configuration requires your ServiceNow instance name, a service account with appropriate ACL permissions, and a project assignment in Nobl9. Nobl9 maps its alert severities to ServiceNow event severity levels automatically.
 
 > :material-book-open-variant: **Docs:** [ServiceNow Alert Method](https://docs.nobl9.com/alerting/alert-methods/servicenow/)
@@ -51,8 +53,9 @@ Nobl9 provides built-in testing for all alert methods. After configuring an aler
 
 ## 7.2 Mapping Alert Severity to Response
 
+The following table illustrates a common routing pattern using Nobl9's built-in alert methods. Adapt the notification channels to match your organization's tooling:
 
-| Nobl9 Alert | Notification Channels | Expected Response |
+| Nobl9 Alert | Example Notification Channels | Expected Response |
 | --- | --- | --- |
 | Budget exhausted | PagerDuty (high urgency) + ServiceNow incident | Declare incident. Engage on-call. Freeze non-critical deployments. |
 | Fast burn (20x+ / 5 min) | PagerDuty (high urgency) + Slack | Investigate immediately. Active incident affecting users. |
@@ -61,9 +64,9 @@ Nobl9 provides built-in testing for all alert methods. After configuring an aler
 | No-data anomaly | Slack + PagerDuty (for critical tier) | Investigate data source connectivity. Check agent health. |
 
 
-## 7.3 Slack Integration Patterns
+## 7.3 Team Messaging Integration Patterns
 
-For Slack integration, we recommend the following channel structure:
+The following channel structure uses Slack as an example, but the same pattern applies to Microsoft Teams, Discord, or any team messaging platform:
 
 - #slo-alerts-critical: High-urgency SLO alerts requiring immediate attention. Low-volume, high-signal.
 - #slo-alerts-[team]: Team-specific SLO alerts and budget status notifications.
