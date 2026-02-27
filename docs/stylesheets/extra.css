@@ -23,7 +23,6 @@
 
 .hero-banner .hero-logo {
   height: 40px;
-  filter: brightness(0) invert(1);
   margin-bottom: 12px;
 }
 
@@ -71,7 +70,8 @@ blockquote {
   padding-bottom: 8px;
 }
 
-/* Invert dark logo to white in the header */
+/* Header logo sizing */
 .md-header .md-header__button.md-logo img {
-  filter: brightness(0) invert(1);
+  height: 24px;
+  width: auto;
 }

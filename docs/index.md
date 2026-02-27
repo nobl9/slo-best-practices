@@ -2,7 +2,7 @@
 
 <div class="hero-banner" markdown>
 
-<img src="images/nobl9-logo.png" alt="Nobl9" class="hero-logo">
+<img src="images/nobl9-logo-white.png" alt="Nobl9" class="hero-logo">
 
 **Enterprise Rollout Strategies & Operational Playbook**
 
