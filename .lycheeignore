@@ -1,6 +1,7 @@
 # Example/placeholder URLs used in YAML code samples and annotation tables
 https://wiki\.internal/.*
 https://pagerduty\.com/schedules/.*
+https://oncall\.internal/.*
 https://github\.com/org/.*
 https://datadog\.com/dash/.*
 https://slack\.com/archives/.*

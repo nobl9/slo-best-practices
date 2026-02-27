@@ -88,7 +88,7 @@ metadata:
   annotations:
     owner: checkout-backend@company.com
     runbook: https://wiki.internal/runbooks/payments-api
-    oncall: https://pagerduty.com/schedules/checkout
+    oncall: https://oncall.internal/schedules/checkout
     repo: https://github.com/org/payments-api
     architecture-doc: https://wiki.internal/arch/payments-api
 ```
@@ -215,7 +215,7 @@ Unlike labels, metadata annotations are not used for filtering or grouping. They
 | --- | --- | --- |
 | owner | Team or individual contact | checkout-backend@company.com |
 | runbook | Operational runbook for the service | https://wiki.internal/runbooks/payments-api |
-| oncall | On-call schedule in PagerDuty or Opsgenie | https://pagerduty.com/schedules/checkout |
+| oncall | On-call schedule (e.g., PagerDuty) | https://oncall.internal/schedules/checkout |
 | repo | Source code repository | https://github.com/org/payments-api |
 | architecture-doc | Service architecture documentation | https://wiki.internal/arch/payments-api |
 | dashboard | Primary monitoring dashboard | https://datadog.com/dash/payments-overview |
