@@ -24,11 +24,32 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install mkdocs-material
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Python dependencies
+        run: pip install mkdocs-material mkdocs-print-site-plugin
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
 
       - name: Build site
         run: mkdocs build --strict
+
+      - name: Generate combined Markdown
+        run: |
+          sh .github/scripts/preprocess-docs.sh
+          cp combined.md site/Nobl9_SLO_Best_Practices_Guide.md
+
+      - name: Generate PDF
+        run: |
+          cd site && python -m http.server 8000 &
+          sleep 2
+          node .github/scripts/export-to-pdf.js \
+            http://localhost:8000/print_page/ \
+            site/Nobl9_SLO_Best_Practices_Guide.pdf \
+            'Nobl9 SLO Best Practices Guide'
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
@@ -47,4 +68,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

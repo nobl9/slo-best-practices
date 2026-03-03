@@ -72,3 +72,13 @@ markdown_extensions:
 
 plugins:
   - search
+  - print-site:
+      add_to_navigation: false
+      print_page_title: 'Full Guide'
+      add_cover_page: false
+      add_table_of_contents: true
+      toc_title: "Table of Contents"
+      toc_depth: 3
+
+extra_javascript:
+  - javascripts/download-links.js
