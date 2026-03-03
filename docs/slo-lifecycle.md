@@ -2,7 +2,7 @@
 
 ![](images/slo-lifecycle-illustration.png)
 
-The Service Level Objective Development Lifecycle (SLODLC) is an open-source framework that provides a structured, repeatable process for creating and managing SLOs. It consists of five phases: Initiate, Discover, Design, Implement, and Operate. This section maps each SLODLC phase to specific Nobl9 capabilities and organizational practices.
+This section maps the five SLODLC phases (Initiate, Discover, Design, Implement, Operate) to Nobl9 capabilities and organizational practices.
 
 > :material-book-open-variant: **Docs:** [SLODLC Handbook](https://www.slodlc.com/slodlc_handbook/handbook/)
 
@@ -16,7 +16,7 @@ The Initiate phase establishes the organizational foundation for SLO adoption. B
 
 ### 4.1.1 Secure Executive Sponsorship
 
-SLO adoption requires sustained investment in tooling, process change, and cultural shift. Without executive sponsorship, the initiative risks being deprioritized when competing with feature delivery. Present the business case in terms of outcomes: reduced downtime costs, faster incident response, improved cross-team alignment, and data-driven prioritization of reliability investments.
+SLO adoption requires executive sponsorship to sustain investment through competing priorities. Present the business case in terms of reduced downtime costs, faster incident response, and data-driven reliability prioritization.
 
 
 ### 4.1.2 Identify Pilot Teams
@@ -128,17 +128,9 @@ For services where AI-assisted discovery is not practical (e.g., legacy systems 
 4. Assess data source readiness: verify that metrics are available in your monitoring tools and that Nobl9 can query them.
 
 
-### 4.2.3 SLI Category Reference
+### 4.2.3 SLI Categories
 
-
-| SLI Category | Measures | Example |
-| --- | --- | --- |
-| Availability | Whether the service is responding to requests | Percentage of HTTP requests returning non-5xx responses |
-| Latency | How fast the service responds | Percentage of requests completed within 200ms |
-| Throughput | How much work the service can handle | Number of successful transactions per minute |
-| Quality/Correctness | Whether the service returns correct results | Percentage of API responses with valid data |
-
-Not every service needs all four SLI types. Start with availability and latency for most services, and add throughput or correctness SLIs only when they provide additional actionable signal.
+The four standard SLI categories are availability, latency, throughput, and quality/correctness. Start with availability and latency for most services, and add throughput or correctness SLIs only when they provide additional actionable signal. For detailed definitions, see the [SLODLC Handbook](https://www.slodlc.com/slodlc_handbook/handbook/).
 
 
 ## 4.3 Phase 2: Design
@@ -186,17 +178,12 @@ In Nobl9, SLIs can be defined using threshold metrics (a single time series eval
 The Implement phase deploys your designed SLOs into Nobl9 and configures the associated alerting.
 
 
-### 4.4.1 Code-First Implementation
-
-As discussed in Section 4.2.1, we recommend starting with SLOs-as-code from day one. Use AI-generated YAML as your starting point, validate with `sloctl apply --dry-run`, and iterate before applying to production. Use the Nobl9 UI for visualization and validation after applying definitions.
-
-
-### 4.4.2 Use the SLI Analyzer
+### 4.4.1 Use the SLI Analyzer
 
 Nobl9 provides an SLI Analyzer that helps teams evaluate potential SLIs before committing to an SLO. Use it to validate that your metric query returns expected data, understand historical reliability against different thresholds, and identify the right target level based on actual performance.
 
 
-### 4.4.3 Configure Alert Policies Using Nobl9 Templates
+### 4.4.2 Configure Alert Policies Using Nobl9 Templates
 
 If you are unsure where to start with alert policies, Nobl9 offers alert presets (templates) for fast-burn and slow-burn policies. These presets follow SRE best practices for multi-window, multi-burn-rate alerting.
 
@@ -222,6 +209,8 @@ Multi-window, multi-burn-rate alerting is the gold standard from Google's SRE Wo
 | Low / Slow Burn | 2 hours at 2x burn | 1 day at 1.5x burn | Slack + Jira ticket | Add to next standup. Review over next 24 hours. |
 | Budget Threshold (25%) | N/A | N/A | Slack + email to manager | Conduct team review. Consider deployment freeze. |
 | Budget Threshold (10%) | N/A | N/A | PagerDuty + Slack + ServiceNow | Escalate to leadership. Freeze non-critical deploys. |
+
+For detailed error budget policy thresholds and required actions at each budget level, see Section 5.5.3.
 
 **Example: Fast-Burn Alert Policy YAML (Using Nobl9 Presets)**
 
@@ -282,6 +271,4 @@ spec:
 - Apply multiple time windows to each SLO. Nobl9's own SRE team uses four alert policies per SLO: 15-minute, 1-hour, 6-hour, and 12-hour windows to distinguish between early indicators and severe incidents.
 - Route by severity: fast burns to PagerDuty, slow burns to Slack, budget thresholds to Jira or ServiceNow.
 
-## 4.5 Phase 4: Operate
-
-The Operate phase covers ongoing SLO management, including review cycles, error budget management, and continuous improvement. This phase integrates directly with the Nobl9 SLO Oversight features described in Section 5.
+Once alert policies are in place, ongoing SLO management—review cycles, error budget policies, and continuous improvement—is covered in Section 5.

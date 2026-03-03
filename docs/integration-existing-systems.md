@@ -58,10 +58,12 @@ The following table illustrates a common routing pattern using Nobl9's built-in 
 | Nobl9 Alert | Example Notification Channels | Expected Response |
 | --- | --- | --- |
 | Budget exhausted | PagerDuty (high urgency) + ServiceNow incident | Declare incident. Engage on-call. Freeze non-critical deployments. |
-| Fast burn (20x+ / 5 min) | PagerDuty (high urgency) + Slack | Investigate immediately. Active incident affecting users. |
-| Elevated burn (2x-5x / 6 hr) | Slack team channel | Investigate within 1 hour. Check recent deployments. |
-| Budget below 25% | Slack + ServiceNow change request | Add to next standup. Review error contributors. Consider freeze. |
+| Fast burn (critical) | PagerDuty (high urgency) + Slack | Investigate immediately. Active incident affecting users. |
+| Elevated burn (warning) | Slack team channel | Investigate within 1 hour. Check recent deployments. |
+| Budget threshold | Slack + ServiceNow change request | Review error contributors. Consider deployment freeze. |
 | No-data anomaly | Slack + PagerDuty (for critical tier) | Investigate data source connectivity. Check agent health. |
+
+For specific burn-rate window configurations and thresholds, see Section 4.4.2. For error budget policy actions by budget status, see Section 5.5.3.
 
 
 ## 7.3 Team Messaging Integration Patterns
@@ -73,15 +75,4 @@ The following channel structure uses Slack as an example, but the same pattern a
 - #slo-reviews: Shared channel for posting weekly and monthly SLO review summaries and Nobl9 Oversight reminders.
 - #slo-help: Support channel where teams ask questions about SLO configuration and best practices.
 
-## 7.4 Service Health Dashboard
-
-The Nobl9 Service Health Dashboard provides a centralized view of all services and their SLO status. Use it as the starting point for operational reviews and incident triage. The dashboard groups services under projects, shows color-coded status indicators (red, yellow, green), and can be filtered by labels to focus on specific teams, tiers, layers, or regions. Use the layer label to create tier-specific views as described in Section 3.4.
-
-
-## 7.5 Composite SLOs for Executive Reporting
-
-Composite SLOs aggregate individual SLOs into a single view representing end-to-end user journeys. They are the primary mechanism for implementing User Journey SLOs (Section 3.2.1) and for executive-level reliability reporting. A checkout user journey composite might combine SLOs from the cart service (application / service layer), the API gateway (platform layer), and the database (infrastructure layer), weighted by their relative impact on the user experience. Refer to Section 3.3 for design guidelines.
-
-> :material-book-open-variant: **Docs:** [Composite SLO Essentials](https://docs.nobl9.com/composites/essentials/)
-
-> :material-book-open-variant: **Docs:** [Composite SLOs Guide](https://docs.nobl9.com/guides/slo-guides/composite-guide/)
+For centralized visibility into service reliability status, use the Nobl9 Service Health Dashboard as described in Section 3.4. For composite SLOs and executive-level reporting, see Section 3.3.
