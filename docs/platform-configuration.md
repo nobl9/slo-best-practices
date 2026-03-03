@@ -277,7 +277,7 @@ Nobl9 connects to your existing monitoring and observability tools to collect SL
 
 ### 2.5.1 Agent vs. Direct Connection
 
-Nobl9 offers two connection methods for data sources. The Agent method deploys a lightweight agent in your infrastructure that pulls metrics and sends them to Nobl9. The Direct method connects Nobl9 directly to your monitoring tool's API. For most enterprise deployments, the Agent method is preferred as it keeps credentials within your network boundary and provides more control over data flow.
+Nobl9 offers Agent and Direct connection methods for data sources. For a detailed comparison and security considerations, see Section 5.3.3.
 
 
 ### 2.5.2 Handling No-Data Conditions

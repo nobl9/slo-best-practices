@@ -145,12 +145,7 @@ Nobl9 SLO Oversight is an enterprise feature that transforms SLOs from static sn
 > :material-book-open-variant: **Docs:** [SLO Oversight Dashboard](https://docs.nobl9.com/dashboards/slo-oversight-dashboard/)
 
 
-### 5.4.1 Why SLO Reviews Matter
-
-SLOs rarely fail all at once. They decay slowly, quietly drifting out of sync with how your systems work and what your customers expect. Definitions go stale. Ownership fades. Metrics keep reporting green while reality shifts around them. Regular reviews catch this drift before it causes real damage.
-
-
-### 5.4.2 Configuring Review Schedules in Nobl9
+### 5.4.1 Configuring Review Schedules in Nobl9
 
 To schedule a review in Nobl9, open the service wizard, select Schedule review, and configure the schedule start, time zone, and repeat options. Review frequency can be customized using the iCalendar format (RRULE) for advanced scheduling. Nobl9 manages review statuses automatically through a five-state lifecycle:
 
@@ -164,7 +159,7 @@ To schedule a review in Nobl9, open the service wizard, select Schedule review, 
 | Overdue | SLO was not reviewed before the deadline. | Remains Overdue until explicitly reviewed. Affects SLO quality score. Does not reset with new cycle. |
 
 
-### 5.4.3 Recommended Review Cadence
+### 5.4.2 Recommended Review Cadence
 
 We recommend a tiered review cadence that matches the strategic importance of each review level:
 
@@ -177,7 +172,7 @@ We recommend a tiered review cadence that matches the strategic importance of ea
 | Strategic Review | Quarterly | Engineering leadership, product, SRE | Program health, cross-team trends, investment priorities, maturity assessment, composite SLO performance. | Cross-service reports, composite SLO dashboards |
 
 
-### 5.4.4 What to Review in Each Cycle
+### 5.4.3 What to Review in Each Cycle
 
 **During an SLO review, evaluate the following:**
 
@@ -190,7 +185,7 @@ We recommend a tiered review cadence that matches the strategic importance of ea
 7. Target appropriateness: Based on business changes, traffic patterns, or architectural changes, does the target need adjustment?
 
 
-### 5.4.5 Integrating Reviews into Daily Work
+### 5.4.4 Integrating Reviews into Daily Work
 
 SLO Oversight is designed to connect with daily workflows, not create parallel processes. Practical integration points include:
 
