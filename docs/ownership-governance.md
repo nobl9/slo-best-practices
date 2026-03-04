@@ -110,7 +110,7 @@ Nobl9 offers two methods for connecting to data sources, each with different sec
 
 > :material-book-open-variant: **Docs:** [Nobl9 Agent](https://docs.nobl9.com/nobl9-agent/)
 
-> :material-book-open-variant: **Docs:** [Agent vs. Direct Connection](https://docs.nobl9.com/slocademy/Agent/direct-vs-agent/)
+> :material-book-open-variant: **Docs:** [Agent vs. Direct Connection](https://docs.nobl9.com/slocademy/n9-agent/direct-vs-agent)
 
 **Best Practices:**
 

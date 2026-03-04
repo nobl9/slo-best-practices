@@ -9,7 +9,7 @@ Managing SLOs as code is the cornerstone of a scalable SLO practice. It brings t
 
 `sloctl` is the Nobl9 command-line tool for managing SLO definitions as YAML files. It supports creating, updating, and deleting all Nobl9 resources, dry-run validation before applying changes, filtering and querying resources by labels, and integration with CI/CD pipelines.
 
-> :material-book-open-variant: **Docs:** [SLOs as Code](https://docs.nobl9.com/SLOs_as_code/)
+> :material-book-open-variant: **Docs:** [SLOs as Code](https://docs.nobl9.com/slos-as-code/)
 
 > :material-book-open-variant: **Docs:** [sloctl on GitHub](https://github.com/nobl9/sloctl)
 
