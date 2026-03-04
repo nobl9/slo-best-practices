@@ -14,6 +14,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Configure RBAC: assign Project Owner to SLO Champion, Project Viewer to all team members
 - [ ] Verify that the team's monitoring tools are supported by Nobl9
 - [ ] Pre-create the data source connection and verify it returns data
+
 **Phase 2: Kickoff Meeting**
 
 - [ ] Present the SLO program overview and business case
@@ -22,12 +23,14 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Review the label taxonomy and annotation requirements
 - [ ] Agree on review cadence (weekly operational, monthly target review)
 - [ ] Assign action items: who will draft the first SLO definitions
+
 **Phase 3: First SLOs (Week 1)**
 
 - [ ] Use AI-assisted discovery (Section 4.2.1) to generate initial SLO YAML from codebase
 - [ ] Review and refine AI-generated YAML with the team
 - [ ] Use the SLI Analyzer to validate that queries return expected data
 - [ ] Confirm initial targets are reasonable based on historical data
+
 **Phase 4: Alert Configuration (Week 2)**
 
 - [ ] Create fast-burn alert policy (20x / 5 min) using Nobl9 preset
@@ -38,6 +41,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] If using ServiceNow, configure the ServiceNow alert method
 - [ ] Test all alert methods using the Nobl9 built-in test feature
 - [ ] Document alert routing in the team's runbook
+
 **Phase 5: CI/CD Setup (Week 2-3)**
 
 - [ ] Create the team's directory in the SLO definitions repository
@@ -47,6 +51,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Verify dry-run validation passes in CI for a test PR
 - [ ] Merge the first PR and verify definitions are applied successfully
 - [ ] Add deployment annotation automation to the team's deploy pipeline
+
 **Phase 6: Operational Readiness (Week 3-4)**
 
 - [ ] Conduct the first weekly SLO review with the team
@@ -57,6 +62,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Add the team's SLOs to the cross-team review dashboard
 - [ ] Conduct a 30-day check-in to review initial targets and adjust
 - [ ] Schedule the handoff: team is now self-sufficient, platform team provides support as needed
+
 **Phase 7: Handoff Validation**
 
 - [ ] SLO Champion can independently create and modify SLO definitions via code
@@ -74,6 +80,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Check the Nobl9 SLO detail page to understand the consumption pattern
 - [ ] Determine if this is caused by a single incident or gradual degradation
 - [ ] Check for no-data anomalies that might be masking the real data
+
 **Step 2: Communicate (within 30 minutes)**
 
 - [ ] Notify the team via the designated Slack channel
@@ -81,6 +88,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] If caused by a single incident, link to the incident channel or postmortem
 - [ ] Brief the engineering manager
 - [ ] If ITSM integration is configured (e.g., ServiceNow), verify an incident has been created
+
 **Step 3: Triage (within 2 hours)**
 
 - [ ] Review the last 7 days of error budget consumption on the SLO timeline
@@ -89,6 +97,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Check platform and infrastructure layer SLOs for cascading issues (Section 3.5)
 - [ ] Check dependency layer SLOs for external causes
 - [ ] Review the Nobl9 Alert Center for related alerts across services
+
 **Step 4: Remediate**
 
 - [ ] Implement the error budget policy: freeze non-critical deployments
@@ -96,11 +105,13 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Create action items for the top error contributors
 - [ ] Assign owners to each action item with deadlines
 - [ ] If cross-team dependencies are involved, engage the SLO Process Owner
+
 **Step 5: Monitor Recovery**
 
 - [ ] Track burn rate daily to confirm it is below 1x (budget is recovering)
 - [ ] Hold daily standups focused on reliability until the budget is above 10%
 - [ ] Create SLO annotations marking remediation actions taken
+
 **Step 6: Review (within 1 week)**
 
 - [ ] Conduct a formal review of the incident and budget exhaustion
@@ -122,6 +133,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Identify any Overdue SLO reviews in Nobl9 Oversight
 - [ ] Pull label compliance metrics from CI/CD pipeline logs
 - [ ] Prepare a summary of data anomalies (no-data, constant-burn, no-burn)
+
 **Step 2: Maturity Assessment**
 
 - [ ] Compare current state to the maturity model (Section 4.1.3)
@@ -129,6 +141,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Evaluate RBAC configuration: are roles still appropriate?
 - [ ] Review the label taxonomy: are new labels needed? Are any unused?
 - [ ] Assess CI/CD pipeline health: are all teams using automated validation?
+
 **Step 3: Target Evaluation**
 
 - [ ] Identify SLOs consistently over-achieving (error budget barely consumed)
@@ -136,6 +149,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] For over-achievers: recommend tightening targets to provide useful signal
 - [ ] For under-achievers: determine if targets are unrealistic or if systemic issues exist
 - [ ] Review composite SLO weights: do they still reflect actual user impact?
+
 **Step 4: Plan Next Quarter**
 
 - [ ] Define adoption goals: how many new teams and services to onboard
@@ -153,6 +167,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Metadata annotations populated (owner, runbook, oncall, repo)
 - [ ] Data source connection is active and tested
 - [ ] User journey mapped and SLI candidates identified
+
 **Design**
 
 - [ ] SLI type selected (availability, latency, throughput, correctness)
@@ -160,6 +175,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Target set based on historical baseline data (use SLI Analyzer)
 - [ ] Time window configured (rolling for alerting, calendar-aligned for reviews)
 - [ ] SLO specification template filled out (Appendix A)
+
 **Implementation**
 
 - [ ] YAML definition created with all required labels and annotations
@@ -168,6 +184,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Code review approved by at least one team member
 - [ ] Applied to Nobl9 via CI/CD pipeline
 - [ ] Verified in the Service Health Dashboard that data is flowing
+
 **Alert Configuration**
 
 - [ ] Fast-burn alert policy attached (20x / 5 min)
@@ -175,6 +192,7 @@ This section provides detailed, actionable checklists for common operational sce
 - [ ] Budget threshold alerts configured (25% and 10%)
 - [ ] No-data anomaly alert configured based on service tier
 - [ ] All alert methods tested
+
 **Governance**
 
 - [ ] Review schedule configured in Nobl9 SLO Oversight
