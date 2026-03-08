@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     container: pandoc/extra
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Preprocess markdown
         run: sh .github/scripts/preprocess-docs.sh
