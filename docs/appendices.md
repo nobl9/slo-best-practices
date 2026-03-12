@@ -84,22 +84,20 @@ The Nobl9 Agent is a lightweight container that pulls SLI metrics from your data
 
 **Architecture:**
 
-```
-┌──────────────────────────────────┐      ┌──────────────────────┐
-│  Your Environment                │      │  Nobl9 Cloud         │
-│                                  │      │                      │
-│  ┌────────────┐   ┌───────────┐  │      │  ┌────────────────┐  │
-│  │ Data Source │◄──│ N9 Agent  │──┼──────┼─►│ Intake Service │  │
-│  │ (Prometheus│   │ Container │  │      │  │                │  │
-│  │  Datadog,  │   └───────────┘  │      │  └────────────────┘  │
-│  │  etc.)     │     ▲            │      │                      │
-│  └────────────┘     │            │      │  m2m Authentication  │
-│                     │            │      │  AWS WAF             │
-│  Credentials via    │            │      └──────────────────────┘
-│  K8s Secrets or     │            │
-│  secrets manager    │            │
-└──────────────────────────────────┘
-        All connections are OUTBOUND
+```mermaid
+flowchart LR
+    subgraph env["Your Environment"]
+        DS["Data Source\n(Prometheus, Datadog, etc.)"]
+        Agent["N9 Agent\nContainer"]
+        Creds["Credentials via\nK8s Secrets or\nsecrets manager"]
+    end
+    subgraph n9["Nobl9 Cloud"]
+        Intake["Intake Service"]
+        Auth["m2m Authentication\nAWS WAF"]
+    end
+    Agent -- "pulls metrics" --> DS
+    Creds -.-> Agent
+    Agent -- "pushes data\n(outbound only)" --> Intake
 ```
 
 **Deployment Options:**
@@ -164,37 +162,32 @@ SLI Connect allows you to push custom SLI metrics directly to Nobl9 rather than 
 | InfluxDB | Telegraf Line Protocol | Compatible with InfluxDB's write API format. |
 | Prometheus | OpenMetrics | Standard Prometheus exposition format. |
 
-**Architecture — With OpenTelemetry Collector:**
+**Architecture — With OpenTelemetry Collector (Recommended):**
 
-```
-┌──────────────────────────────────────────────┐
-│  Your Environment                            │
-│                                              │
-│  ┌─────────────┐     ┌────────────────────┐  │
-│  │ Application │────►│  OTel Collector    │  │
-│  │ (OTel SDK)  │     │                    │  │
-│  └─────────────┘     │  exporters:        │  │
-│                      │   otlphttp/slic:   │──┼──► Nobl9 SLIC Endpoint
-│  ┌─────────────┐     │    endpoint: ...   │  │    (HTTPS, outbound only)
-│  │ Custom Data │────►│    headers: ...    │  │
-│  │ Exporter    │     └────────────────────┘  │
-│  └─────────────┘                             │
-└──────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph env["Your Environment"]
+        App["Application\n(OTel SDK)"]
+        Custom["Custom Data\nExporter"]
+        Collector["OTel Collector\n(batch, retry, fan-out)"]
+    end
+    SLIC["Nobl9 SLIC\nEndpoint"]
+    App --> Collector
+    Custom --> Collector
+    Collector -- "OTLP over HTTPS\n(outbound only)" --> SLIC
 ```
 
-This is the recommended pattern. The OpenTelemetry Collector provides batching, retry logic, and the ability to fan out metrics to multiple backends.
+The Collector provides batching, retry logic, and the ability to fan out metrics to multiple backends.
 
 **Architecture — Direct from Application (No Collector):**
 
-```
-┌──────────────────────────┐
-│  Your Environment        │
-│                          │
-│  ┌─────────────┐         │
-│  │ Application │─────────┼──► Nobl9 SLIC Endpoint
-│  │ (OTel SDK)  │         │    (HTTPS, outbound only)
-│  └─────────────┘         │
-└──────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph env["Your Environment"]
+        App["Application\n(OTel SDK)"]
+    end
+    SLIC["Nobl9 SLIC\nEndpoint"]
+    App -- "OTLP over HTTPS\n(outbound only)" --> SLIC
 ```
 
 Simpler to set up, but lacks the buffering and reliability of the Collector. Suitable for development or low-volume use cases.
