@@ -47,8 +47,9 @@ Nobl9 supports three methods for getting SLI data into the platform: **Agent**, 
 | Data flow direction | Agent pulls from your data source, pushes to Nobl9 (outbound only) | Nobl9 connects inbound to your data source | Your applications push metrics to Nobl9's SLIC endpoint |
 | Credentials stored in Nobl9 | No. Credentials remain in your environment. | Yes. Encrypted and stored in Nobl9. | Nobl9 API key used for authentication. No data-source credentials involved. |
 | Requires deployment in your infra | Yes. Runs as a container (Kubernetes or Docker). | No. Nobl9 connects directly to your data source API. | Optional. OpenTelemetry Collector can be deployed, or applications can push directly. |
-| Inbound ports required | None. All connections are outbound. | Yes. Must open a port and allowlist Nobl9 IP addresses. | None. Your applications make outbound HTTPS calls. |
-| Setup complexity | Higher. Requires K8s/Docker deployment and credential injection. | Lower. Configure credentials in the Nobl9 UI or YAML. | Moderate. Requires instrumentation or collector configuration. |
+| Inbound ports required | None. All connections are outbound. | Only for self-hosted data sources. Cloud-hosted sources (e.g., Datadog, New Relic) do not require inbound port configuration. | None. Your applications make outbound HTTPS calls. |
+| Setup complexity | Low. A single agent daemon with K8s Secrets for credentials. | Lowest. Configure credentials in the Nobl9 UI or YAML. | Higher. Requires OTel instrumentation or collector configuration and a PromQL query layer. |
+| Historical data features | Full support for Replay, SLI Analyzer, and Budget Adjustment — Nobl9 can re-query the original data source at any time. | Full support for Replay, SLI Analyzer, and Budget Adjustment. | **Limited.** Replay, SLI Analyzer, and Budget Adjustment can only operate on data already sent to SLIC. Historical data cannot be re-queried from the original source. Gaps or errors in the ingestion pipeline may require manual intervention to correct. |
 | Query language | Native to data source (PromQL, Datadog queries, etc.) | Native to data source | PromQL-compatible (queries written against SLIC's Prometheus-flavor store) |
 | Best for | Production environments with strict network security | Non-production environments or SaaS data sources with public APIs | Custom metrics, synthetic SLIs, business KPIs, or data sources without a native Nobl9 integration |
 
@@ -57,15 +58,16 @@ Nobl9 supports three methods for getting SLI data into the platform: **Agent**, 
 
 Use this decision tree to select the right method for each data source:
 
-1. **Is your data source natively supported by Nobl9?** If not, use SLI Connect to push custom metrics.
+1. **Is your data source natively supported by Nobl9?** If not, use SLI Connect to push custom metrics — but read the SLIC limitations below first.
 2. **Does your network policy allow inbound connections from Nobl9?** If not, use Agent.
 3. **Do security requirements mandate that credentials stay within your environment?** If yes, use Agent.
 4. **Is this a non-production or SaaS-hosted data source with a public API?** Direct is the simplest option.
 5. **Do you need to derive SLIs from custom business logic, synthetic checks, or non-metric data?** Use SLI Connect with a custom exporter.
+6. **Do you need Replay, SLI Analyzer, or Budget Adjustment with full historical access?** Prefer Agent or Direct. SLI Connect limits these features to data already ingested — Nobl9 cannot re-query the original source to backfill gaps or reprocess historical windows.
 
 **Data Source Compatibility:**
 
-Most Nobl9 data sources support both Agent and Direct methods. The following data sources are Agent-only:
+Most Nobl9 data sources support both Agent and Direct methods. As of March 2025, the following data sources are Agent-only (this list is shrinking as Nobl9 adds Direct support — check the [Data Sources documentation](https://docs.nobl9.com/sources/) for the latest):
 
 - Amazon Prometheus
 - Coralogix
@@ -112,9 +114,8 @@ flowchart LR
 - Deploy agents in the same network segment as the data sources they query to minimize latency and avoid cross-zone traffic costs.
 - Use Kubernetes Secrets or a secrets manager (Vault, AWS Secrets Manager) to inject credentials. Avoid inline environment variables, which are visible in `kubectl describe` output.
 - Set the `N9_METRICS_PORT` environment variable to expose agent health metrics at `/metrics` for monitoring the agent itself.
-- Pin agent versions in your deployment manifests rather than using `latest`. The current stable version is `0.107.2`.
-- For Prometheus data sources behind a reverse proxy, note that the Nobl9 Agent does not support authentication proxies (HTTP Basic Auth or client certificates). Use SLI Connect as an alternative in these scenarios.
-- Configure query delay environment variables (e.g., `PROM_QUERY_DELAY`) to account for data source ingestion lag and avoid querying incomplete data windows.
+- Pin agent versions in your deployment manifests rather than using `latest`. Check the [Nobl9 Agent documentation](https://docs.nobl9.com/nobl9-agent/) for the latest stable version.
+- Tune the four key agent query settings for each data source: **query interval** (how often the agent queries), **query delay** (offset to account for ingestion lag), **query jitter** (randomization to avoid thundering herd), and **query timeout** (maximum wait for a response). These are configured via data-source-specific environment variables (e.g., `PROM_QUERY_DELAY`, `PROM_QUERY_INTERVAL`).
 
 **Agent Credential Environment Variables:**
 
@@ -145,7 +146,7 @@ Direct connections let Nobl9's servers connect to your data source API to pull m
 
 **Security Considerations:**
 
-- You must allowlist Nobl9's IP addresses in your firewall rules. IP addresses differ by Nobl9 instance (app.nobl9.com vs. us1.nobl9.com). See the Nobl9 documentation for current IP addresses.
+- For self-hosted data sources, you must allowlist Nobl9's IP addresses in your firewall rules. IP addresses differ by Nobl9 instance (app.nobl9.com vs. us1.nobl9.com). See the Nobl9 documentation for current IP addresses. Cloud-hosted SaaS data sources (e.g., Datadog, New Relic) typically do not require IP allowlisting.
 - Data source credentials are encrypted and stored in Nobl9. If your security policy prohibits third-party credential storage, use Agent instead.
 - Use read-only service accounts for all Direct connections. Nobl9 only needs query access.
 
@@ -233,9 +234,19 @@ SLI Connect uses HTTP Basic Authentication with your Nobl9 Client ID as the user
 
 - Your SLI data comes from a source without a native Nobl9 integration (e.g., a custom database, an internal API, a third-party service).
 - You need to compute SLIs from business logic (e.g., percentage of orders fulfilled within SLA, payment success rate from a custom ledger).
-- Your Prometheus instance is behind an authentication proxy that the Nobl9 Agent does not support.
 - You want to consolidate metrics from multiple sources into a single SLI pipeline using the OpenTelemetry Collector.
 - You are already using OpenTelemetry instrumentation and want to send the same metrics to Nobl9 alongside your existing observability backend.
+
+**SLI Connect Limitations:**
+
+SLI Connect has a fundamental trade-off compared to Agent and Direct integrations: Nobl9 can only operate on the data you have already pushed to SLIC. This has significant implications for Day 2+ operations:
+
+- **Replay** cannot re-query the original data source. If you need to backfill historical SLI data (e.g., after correcting a query or recovering from a telemetry outage), the data must be re-sent to SLIC manually or via a custom pipeline.
+- **SLI Analyzer** can only evaluate data already in SLIC. You cannot use it to explore historical metric data that was never ingested.
+- **Budget Adjustment** is limited to the data windows already present in SLIC.
+- **Telemetry pipeline failures** upstream of SLIC (e.g., a broken OTel Collector, application instrumentation gaps, or observability infrastructure outages) create data gaps that cannot be automatically recovered. These gaps often require engineering intervention or custom backfill processes to resolve.
+
+For data sources with a native Nobl9 integration, Agent or Direct connections avoid these limitations entirely because Nobl9 can always re-query the original source.
 
 
 ### 10.2.6 Integration Decision Matrix
@@ -246,7 +257,7 @@ SLI Connect uses HTTP Basic Authentication with your Nobl9 Client ID as the user
 | Datadog (SaaS) in production | Agent or Direct | Both supported. Agent if credentials must stay local; Direct for simplicity. |
 | New Relic in a staging environment | Direct | SaaS with public API. Low security risk in non-production. |
 | Custom business KPI from an internal database | SLI Connect | No native integration. Build a custom exporter to push metrics via OTLP. |
-| Prometheus behind NGINX with mTLS | SLI Connect | Agent does not support authentication proxies. Push metrics via OTel Collector instead. |
+| Prometheus behind NGINX with auth | Agent | The agent supports custom HTTP headers for authentication. Configure header-based auth via the agent's environment variables. |
 | Elasticsearch logs for error rate SLI | Agent | Agent-only data source. |
 | Synthetic monitoring results from a custom tool | SLI Connect | Push synthetic check results as metrics via OTLP or OpenMetrics. |
 | CloudWatch in an AWS environment with strict IAM | Agent | Credentials stay in your AWS account. Agent assumes IAM role. |
